@@ -19,7 +19,12 @@ const MobileNav = () => {
         <SheetTitle>Welcome to Foodie</SheetTitle>
         <Separator />
         <SheetDescription className="flex">
-          <Button className="flex-1 fond-bold bg-orange-500">Log In</Button>
+          <Button
+            variant="ghost"
+            className="font-bold border border-orange-500 text-orange-500 bg-white hover:text-white hover:bg-orange-500 transition ease-in-out duration-300 flex-1 py-2"
+          >
+            Log In
+          </Button>
         </SheetDescription>
       </SheetContent>
     </Sheet>
