@@ -6,7 +6,6 @@ import {
 import { CircleUserRound } from "lucide-react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Link } from "react-router-dom";
-import { DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
 import { Separator } from "../ui/separator";
 import { Button } from "../ui/button";
 
