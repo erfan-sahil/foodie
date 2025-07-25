@@ -1,4 +1,4 @@
-import { Auth0Provider, type AppState } from "@auth0/auth0-react";
+import { Auth0Provider, User, type AppState } from "@auth0/auth0-react";
 import type React from "react";
 
 type Props = {

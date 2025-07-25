@@ -22,7 +22,7 @@ const UserNameMenu = () => {
       <DropdownMenuContent className="space-y-2 py-4 px-3">
         <div className="text-center">
           <Link
-            to="user-profile"
+            to="/user-profile"
             className="font-bold hover:text-orange-500 transition ease-in-out duration-300"
           >
             User Profile
@@ -31,7 +31,7 @@ const UserNameMenu = () => {
         <Separator />
         <div className="flex items-center">
           <Button
-            onClick={async () => await logout()}
+            onClick={async() => await logout()}
             className="flex flex-1 font-bold bg-orange-500 hover:bg-orange-600 transition ease-in-out duration-300 text-white cursor-pointer"
           >
             Log Out
