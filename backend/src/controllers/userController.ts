@@ -9,7 +9,7 @@ const createUser = async (req: Request, res: Response) => {
       newUser: newUser,
     });
   } catch (error) {
-    console.error("Error in userRoute", error);
+    console.error("Something error in userRoute", error);
     res.status(500).json({
       msg: "Internal server error",
       error: error instanceof Error ? error.message : "Unknown error",
