@@ -3,7 +3,18 @@ import UserModel from "../models/userModel";
 
 const createUser = async (req: Request, res: Response) => {
   try {
-    const newUser = await UserModel.create({});
+    const { auth0Id } = req.body;
+    const existingUser = await UserModel.findOne({ auth0Id });
+
+    if (existingUser) {
+      return res.status(400).json({
+        message: "User already exists",
+      });
+    }
+
+    const newUser = new UserModel(req.body);
+    await newUser.save();
+
     res.status(200).json({
       msg: "User route is working",
       newUser: newUser,
