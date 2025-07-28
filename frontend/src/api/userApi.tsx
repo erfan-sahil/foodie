@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -9,10 +10,16 @@ type CreateUserRequest = {
 };
 
 export const useCreateUser = () => {
+  const { getAccessTokenSilently } = useAuth0();
+
   const queryClient = useQueryClient();
   const createUserRequest = async (user: CreateUserRequest) => {
-    console.log("Creating user with data:", user);
-    const response = await axios.post(`${API_BASE_URL}/api/v1/user`, user);
+    const accessToken = await getAccessTokenSilently();
+    const response = await axios.post(`${API_BASE_URL}/api/v1/user`, user, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
     if (!response.data) {
       throw new Error("Failed to create user");
     }
