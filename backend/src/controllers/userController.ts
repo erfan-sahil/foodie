@@ -16,7 +16,7 @@ const createUser = async (req: Request, res: Response) => {
     await newUser.save();
 
     res.status(200).json({
-      msg: "User route is working",
+      msg: "User created successfully",
       newUser: newUser,
     });
   } catch (error) {
