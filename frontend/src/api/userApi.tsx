@@ -10,13 +10,9 @@ type CreateUserRequest = {
 
 export const useCreateUser = () => {
   const queryClient = useQueryClient();
-
   const createUserRequest = async (user: CreateUserRequest) => {
-    const response = await axios.post(`${API_BASE_URL}/api/v1/user`, user, {
-      // headers: {
-      //   'Content-Type': 'application/json',
-      // },
-    });
+    console.log("Creating user with data:", user);
+    const response = await axios.post(`${API_BASE_URL}/api/v1/user`, user);
     if (!response.data) {
       throw new Error("Failed to create user");
     }

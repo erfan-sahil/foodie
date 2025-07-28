@@ -21,6 +21,8 @@ const Auth0ProviderWithNavigate = ({ children }: Props) => {
       createUser({
         auth0Id: user.sub,
         email: user.email,
+      }).catch((error) => {
+        console.error("Failed to create user:", error);
       });
     }
   };
