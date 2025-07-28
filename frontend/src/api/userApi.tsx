@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useMutation, QueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -9,7 +9,7 @@ type CreateUserRequest = {
 };
 
 export const useCreateUser = () => {
-  const queryClient = new QueryClient();
+  const queryClient = useQueryClient();
 
   const createUserRequest = async (user: CreateUserRequest) => {
     const response = await axios.post(`${API_BASE_URL}/api/v1/user`, user, {
@@ -23,7 +23,7 @@ export const useCreateUser = () => {
   };
 
   const {
-    mutate: createUser,
+    mutateAsync: createUser,
     isError,
     isSuccess,
   } = useMutation({
