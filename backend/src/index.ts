@@ -3,9 +3,12 @@ import cors from "cors";
 import "dotenv/config";
 import mongoose from "mongoose";
 import userRoute from "./routes/userRoute";
+import { confidential } from "./secret/confidential";
+
+const { mongodbConnectionString, port } = confidential();
 
 mongoose
-  .connect(process.env.MONGODB_CONNECTION_STRING as string)
+  .connect(mongodbConnectionString as string)
   .then(() => {
     console.log("Connected to Database");
   })
@@ -19,6 +22,6 @@ app.use(cors());
 
 app.use("/api/v1/user", userRoute.userRoute);
 
-app.listen(process.env.PORT, () => {
+app.listen(port, () => {
   console.log(`Server is running on http://localhost:${process.env.PORT}`);
 });
