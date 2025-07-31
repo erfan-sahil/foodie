@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import UserModel from "../models/userModel";
 
-const createUser = async (req: Request, res: Response) => {
+export const createUser = async (req: Request, res: Response) => {
   try {
     const { auth0Id } = req.body;
     const existingUser = await UserModel.findOne({ auth0Id });
@@ -28,4 +28,32 @@ const createUser = async (req: Request, res: Response) => {
   }
 };
 
-export default createUser;
+export const updateCurrentUser = async (req: Request, res: Response) => {
+  try {
+    const { name, addressLine1, city, country } = req.body;
+    const user = await UserModel.findById(req.userId);
+
+    if (!user) {
+      return res.status(400).json({
+        msg: "User not found",
+      });
+    }
+
+    user.name = name;
+    user.addressLine1 = addressLine1;
+    user.city = city;
+    user.country = country;
+
+    await user.save();
+
+    res.status(200).json({
+      user,
+      msg: "User updated successfully",
+    });
+  } catch (error) {
+    console.error("Something error in updateCurrentUser", error);
+    res.status(500).json({
+      msg: "Internal server error",
+    });
+  }
+};
