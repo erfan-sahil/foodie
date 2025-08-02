@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAuth0 } from "@auth0/auth0-react";
+import { toast } from "sonner";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -71,9 +72,11 @@ export const useUpdateUser = () => {
     mutationFn: updateUserRequest,
     onSuccess: () => {
       console.log("User updated successfully");
+      toast.success("User updated successfully");
     },
     onError: (error) => {
       console.error("Error updating user:", error);
+      toast.error(error.toString());
     },
   });
 
