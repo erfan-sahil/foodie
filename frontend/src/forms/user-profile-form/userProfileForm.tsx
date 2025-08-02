@@ -54,7 +54,7 @@ const UserProfileForm = ({ onSave, isLoading }: Props) => {
               <FormControl>
                 <Input
                   disabled
-                  placeholder="shadcn"
+                  placeholder="Email"
                   {...field}
                   className="bg-white"
                 />
@@ -70,7 +70,7 @@ const UserProfileForm = ({ onSave, isLoading }: Props) => {
             <FormItem>
               <FormLabel>Name</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} className="bg-white" />
+                <Input placeholder="Name" {...field} className="bg-white" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -85,7 +85,11 @@ const UserProfileForm = ({ onSave, isLoading }: Props) => {
               <FormItem className="flex-1">
                 <FormLabel>AddressLine1</FormLabel>
                 <FormControl>
-                  <Input placeholder="shadcn" {...field} className="bg-white" />
+                  <Input
+                    placeholder="AddressLine1"
+                    {...field}
+                    className="bg-white"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -98,7 +102,7 @@ const UserProfileForm = ({ onSave, isLoading }: Props) => {
               <FormItem className="flex-1">
                 <FormLabel>City</FormLabel>
                 <FormControl>
-                  <Input placeholder="shadcn" {...field} className="bg-white" />
+                  <Input placeholder="City" {...field} className="bg-white" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -111,7 +115,11 @@ const UserProfileForm = ({ onSave, isLoading }: Props) => {
               <FormItem className="flex-1">
                 <FormLabel>Country</FormLabel>
                 <FormControl>
-                  <Input placeholder="shadcn" {...field} className="bg-white" />
+                  <Input
+                    placeholder="Country"
+                    {...field}
+                    className="bg-white"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

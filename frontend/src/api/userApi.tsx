@@ -42,3 +42,47 @@ export const useCreateUser = () => {
     isSuccess,
   };
 };
+
+type UpdateUserRequest = {
+  name: string;
+  addressLine1: string;
+  city: string;
+  country: string;
+};
+export const useUpdateUser = () => {
+  const { getAccessTokenSilently } = useAuth0();
+
+  const updateUserRequest = async (formData: UpdateUserRequest) => {
+    const AccessToken = getAccessTokenSilently();
+
+    const response = await axios.put(`${API_BASE_URL}/api/v1/user`, formData, {
+      headers: {
+        Authorization: `Bearer ${AccessToken}`,
+      },
+    });
+    if (!response.data) {
+      throw new Error("Failed to update user");
+    }
+    return response.data;
+  };
+
+  const {
+    mutateAsync: updateUser,
+    isPending,
+    error,
+  } = useMutation({
+    mutationFn: updateUserRequest,
+    onSuccess: () => {
+      console.log("User updated successfully");
+    },
+    onError: (error) => {
+      console.error("Error updating user:", error);
+    },
+  });
+
+  return {
+    updateUser,
+    isPending,
+    error,
+  };
+};
