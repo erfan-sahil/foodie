@@ -32,24 +32,20 @@ export const updateCurrentUser = async (req: Request, res: Response) => {
   try {
     const { name, addressLine1, city, country } = req.body;
     const user = await UserModel.findById(req.userId);
-
     if (!user) {
       return res.status(400).json({
         msg: "User not found",
       });
     }
-
+    console.log("Updating user:", user);
     user.name = name;
     user.addressLine1 = addressLine1;
     user.city = city;
     user.country = country;
 
     await user.save();
-
-    res.status(200).json({
-      user,
-      msg: "User updated successfully",
-    });
+    res.send(user);
+    return res.status(200).json(user);
   } catch (error) {
     console.error("Something error in updateCurrentUser", error);
     res.status(500).json({

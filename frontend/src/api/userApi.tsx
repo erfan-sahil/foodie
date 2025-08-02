@@ -53,11 +53,12 @@ export const useUpdateUser = () => {
   const { getAccessTokenSilently } = useAuth0();
 
   const updateUserRequest = async (formData: UpdateUserRequest) => {
-    const AccessToken = getAccessTokenSilently();
-
+    const accessToken = await getAccessTokenSilently();
+    console.log("Access Token:", accessToken);
     const response = await axios.put(`${API_BASE_URL}/api/v1/user`, formData, {
       headers: {
-        Authorization: `Bearer ${AccessToken}`,
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
       },
     });
     if (!response.data) {
@@ -66,11 +67,7 @@ export const useUpdateUser = () => {
     return response.data;
   };
 
-  const {
-    mutateAsync: updateUser,
-    isPending,
-    error,
-  } = useMutation({
+  const { mutateAsync: updateUser, isPending } = useMutation({
     mutationFn: updateUserRequest,
     onSuccess: () => {
       console.log("User updated successfully");
@@ -83,6 +80,5 @@ export const useUpdateUser = () => {
   return {
     updateUser,
     isPending,
-    error,
   };
 };

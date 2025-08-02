@@ -26,26 +26,25 @@ export const jwtParse = async (
 ) => {
   const { authorization } = req.headers;
 
-  if (authorization || !authorization?.startsWith("Bearer ")) {
+  if (!authorization || !authorization?.startsWith("Bearer ")) {
     return res.status(401).json({
       msg: "Unauthorized, no token provided",
     });
   }
+
   const token = authorization.split(" ")[1];
 
   try {
     const decoded = jwt.decode(token) as jwt.JwtPayload;
-    console.log(decoded);
+
     const auth0Id = decoded.sub;
 
     const user = await UserModel.findOne({ auth0Id });
-
     if (!user) {
       return res.status(401).json({
         msg: "User not found",
       });
     }
-
     req.auth0Id = auth0Id as string;
     req.userId = user._id.toString();
     next();
