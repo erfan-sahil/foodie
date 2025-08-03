@@ -11,10 +11,7 @@ export const getCurrentUser = async (req: Request, res: Response) => {
       });
     }
 
-    res.status(200).json({
-      msg: "User found",
-      user: currentUser,
-    });
+    res.send(currentUser);
   } catch (error) {
     console.error("Something error in getCurrentUser", error);
     res.status(500).json({

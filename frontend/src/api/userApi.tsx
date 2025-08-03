@@ -2,13 +2,14 @@ import axios from "axios";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAuth0 } from "@auth0/auth0-react";
 import { toast } from "sonner";
+import type { User } from "../types/types";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export const useGetUser = () => {
   const { getAccessTokenSilently } = useAuth0();
 
-  const getUserRequest = async () => {
+  const getUserRequest = async (): Promise<User> => {
     const accessToken = await getAccessTokenSilently();
 
     const response = await axios.get(`${API_BASE_URL}/api/v1/user`, {
@@ -34,7 +35,7 @@ export const useGetUser = () => {
   });
 
   if (isSuccess) {
-    toast.success("User data fetched successfully");
+    console.log("User data fetched successfully");
   }
   if (isError) {
     toast.error("Failed to fetch user data");
