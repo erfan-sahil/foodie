@@ -24,7 +24,7 @@ export const useGetUser = () => {
   };
 
   const {
-    data: userData,
+    data: currentUser,
     isPending,
     isError,
     isSuccess,
@@ -41,7 +41,7 @@ export const useGetUser = () => {
   }
 
   return {
-    userData,
+    currentUser,
     isPending,
   };
 };
