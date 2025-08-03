@@ -38,7 +38,6 @@ const UserProfileForm = ({ onSave, isLoading, currentUser }: Props) => {
     defaultValues: currentUser,
   });
 
-  console.log("Current User in UserProfileForm:", currentUser);
   useEffect(() => {
     form.reset(currentUser);
   }, [currentUser, form]);
