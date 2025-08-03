@@ -1,9 +1,50 @@
 import axios from "axios";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAuth0 } from "@auth0/auth0-react";
 import { toast } from "sonner";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+export const useGetUser = () => {
+  const { getAccessTokenSilently } = useAuth0();
+
+  const getUserRequest = async () => {
+    const accessToken = await getAccessTokenSilently();
+
+    const response = await axios.get(`${API_BASE_URL}/api/v1/user`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    if (!response.data) {
+      throw new Error("Failed to fetch user");
+    }
+    return response.data;
+  };
+
+  const {
+    data: userData,
+    isPending,
+    isError,
+    isSuccess,
+  } = useQuery({
+    queryKey: ["fetchCurrentUser"],
+    queryFn: getUserRequest,
+  });
+
+  if (isSuccess) {
+    toast.success("User data fetched successfully");
+  }
+  if (isError) {
+    toast.error("Failed to fetch user data");
+  }
+
+  return {
+    userData,
+    isPending,
+  };
+};
 
 type CreateUserRequest = {
   auth0Id: string;
