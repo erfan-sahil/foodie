@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import UserModel from "../models/userModel";
 
+export const getCurrentUser = async (req: Request, res: Response) => {};
+
 export const createUser = async (req: Request, res: Response) => {
   try {
     const { auth0Id } = req.body;
