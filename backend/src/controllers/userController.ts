@@ -1,7 +1,27 @@
 import { Request, Response } from "express";
 import UserModel from "../models/userModel";
 
-export const getCurrentUser = async (req: Request, res: Response) => {};
+export const getCurrentUser = async (req: Request, res: Response) => {
+  try {
+    const currentUser = await UserModel.findOne({ _id: req.userId });
+
+    if (!currentUser) {
+      res.status(404).json({
+        msg: "User not found",
+      });
+    }
+
+    res.status(200).json({
+      msg: "User found",
+      user: currentUser,
+    });
+  } catch (error) {
+    console.error("Something error in getCurrentUser", error);
+    res.status(500).json({
+      msg: "Internal server error",
+    });
+  }
+};
 
 export const createUser = async (req: Request, res: Response) => {
   try {
