@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import userRoute from "./routes/userRoute";
 import { confidential } from "./secret/confidential";
 import { v2 as cloudinary } from "cloudinary";
+import restaurantRoute from "./routes/restaurantRoute";
 
 const { mongodbConnectionString, port } = confidential();
 
@@ -32,6 +33,7 @@ app.get("/health", (req: Request, res: Response) => {
 });
 
 app.use("/api/v1/user", userRoute.userRoute);
+app.use("/api/v1/restaurant", restaurantRoute.restaurantRoute);
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${process.env.PORT}`);
