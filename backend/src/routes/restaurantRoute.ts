@@ -5,6 +5,15 @@ import { createRestaurant } from "../controllers/restaurantController";
 
 const restaurantRoute = express.Router();
 
-restaurantRoute.post("/", createRestaurant);
+const storage = multer.memoryStorage();
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: 5 * 1024 * 1024 },
+});
+
+if (!upload) {
+  console.error("Multer upload configuration failed");
+}
+restaurantRoute.post("/", upload.single("imageFile"), createRestaurant);
 
 export default { restaurantRoute };
