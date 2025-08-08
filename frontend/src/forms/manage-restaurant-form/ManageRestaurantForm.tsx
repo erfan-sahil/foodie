@@ -1,0 +1,59 @@
+import { Form } from "@/components/ui/form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+
+const formSchema = z.object({
+  restaurantName: z
+    .string()
+    .nonempty({ message: "Restaurant name is required" }),
+  city: z.string().nonempty({ message: "City name is required" }),
+  country: z.string().nonempty({ message: "Country name is required" }),
+  deliveryPrice: z.coerce
+    .number()
+    .min(1, { message: "Delivery price is required" }),
+  estimatedDeliveryTime: z.coerce
+    .number()
+    .min(1, { message: "Estimated delivery time is required" }),
+  cuisines: z
+    .array(z.string())
+    .nonempty({ message: "Please select at least one item" }),
+  menuItems: z.array(
+    z.object({
+      name: z.string().min(1, "Name is required"),
+      price: z.coerce.number().min(1, "Price is required"),
+    })
+  ),
+  imageFile: z
+    .instanceof(File)
+    .refine((file) => !!file, { message: "Image is required" }),
+});
+
+type restaurantFormData = z.input<typeof formSchema>;
+
+type Props = {
+  onSave: (restaurantFormData: FormData) => void;
+  isPending: boolean;
+};
+
+const ManageRestaurantForm = ({ onSave, isPending }: Props) => {
+  const form = useForm<restaurantFormData>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      cuisines: [],
+      menuItems: [{ name: "", price: 0 }],
+    },
+  });
+
+  const onSubmit = (formDataJson: restaurantFormData) => {
+    //
+  };
+
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)}></form>
+    </Form>
+  );
+};
+
+export default ManageRestaurantForm;
