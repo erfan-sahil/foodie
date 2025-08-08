@@ -1,6 +1,7 @@
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { CircleUserRound } from "lucide-react";
@@ -20,18 +21,26 @@ const UserNameMenu = () => {
         </span>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="space-y-2 py-4 px-3">
-        <div className="text-center">
+        <DropdownMenuItem className="text-center flex flex-col">
           <Link
             to="/user-profile"
             className="font-bold hover:text-orange-500 transition ease-in-out duration-300"
           >
             User Profile
           </Link>
-        </div>
+        </DropdownMenuItem>
+        <DropdownMenuItem>
+          <Link
+            to="/manage-restaurant"
+            className="font-bold hover:text-orange-500 transition ease-in-out duration-300"
+          >
+            Manage Restaurant
+          </Link>
+        </DropdownMenuItem>
         <Separator />
         <div className="flex items-center">
           <Button
-            onClick={async() => await logout()}
+            onClick={async () => await logout()}
             className="flex flex-1 font-bold bg-orange-500 hover:bg-orange-600 transition ease-in-out duration-300 text-white cursor-pointer"
           >
             Log Out
