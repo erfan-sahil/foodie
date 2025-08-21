@@ -30,7 +30,7 @@ const formSchema = z.object({
     .refine((file) => !!file, { message: "Image is required" }),
 });
 
-type restaurantFormData = z.input<typeof formSchema>;
+type RestaurantFormData = z.input<typeof formSchema>;
 
 type Props = {
   onSave: (restaurantFormData: FormData) => void;
@@ -38,7 +38,7 @@ type Props = {
 };
 
 const ManageRestaurantForm = ({ onSave, isPending }: Props) => {
-  const form = useForm<restaurantFormData>({
+  const form = useForm<RestaurantFormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       cuisines: [],
@@ -46,7 +46,7 @@ const ManageRestaurantForm = ({ onSave, isPending }: Props) => {
     },
   });
 
-  const onSubmit = (formDataJson: restaurantFormData) => {
+  const onSubmit = (formDataJson: RestaurantFormData) => {
     //
   };
 
