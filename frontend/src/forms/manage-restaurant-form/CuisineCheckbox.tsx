@@ -17,6 +17,15 @@ const CuisineCheckbox = ({ cuisine, field }: Props) => {
         <Checkbox
           className="bg-white"
           checked={field.value.includes(cuisine)}
+          onCheckedChange={(checked) => {
+            if (checked) {
+              field.onChange([...field.value, cuisine]);
+            } else {
+              field.onChange(
+                field.value.filter((value: string) => value !== cuisine)
+              );
+            }
+          }}
         />
       </FormControl>
     </FormItem>
