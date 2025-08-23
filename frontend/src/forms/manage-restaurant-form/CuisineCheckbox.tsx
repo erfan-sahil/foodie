@@ -1,5 +1,5 @@
-import { FormControl, FormItem } from "@/components/ui/form";
-import { Checkbox } from "@radix-ui/react-checkbox";
+import { FormControl, FormItem, FormLabel } from "@/components/ui/form";
+import { Checkbox } from "@/components/ui/checkbox";
 import type { ControllerRenderProps, FieldValues } from "react-hook-form";
 
 type Props = {
@@ -8,6 +8,7 @@ type Props = {
 };
 
 const CuisineCheckbox = ({ cuisine, field }: Props) => {
+  console.log(cuisine);
   return (
     <FormItem
       className="flex flex-row items-center space-x-1 space-y-0
@@ -28,6 +29,7 @@ const CuisineCheckbox = ({ cuisine, field }: Props) => {
           }}
         />
       </FormControl>
+      <FormLabel className="text-sm font-normal">{cuisine}</FormLabel>
     </FormItem>
   );
 };
