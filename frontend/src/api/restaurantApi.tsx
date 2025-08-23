@@ -1,3 +1,4 @@
+import type { Restaurant } from "@/types/types";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
@@ -8,7 +9,9 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 export const useCreateRestaurant = () => {
   const { getAccessTokenSilently } = useAuth0();
 
-  const createRestaurantRequest = async (restaurantFormData: FormData) => {
+  const createRestaurantRequest = async (
+    restaurantFormData: FormData
+  ): Promise<Restaurant> => {
     const accessToken = await getAccessTokenSilently();
 
     const response = await axios.post(
