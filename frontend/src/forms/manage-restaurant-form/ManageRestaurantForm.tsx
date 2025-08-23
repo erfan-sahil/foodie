@@ -79,6 +79,8 @@ const ManageRestaurantForm = ({ onSave, isPending }: Props) => {
       );
     });
 
+    formData.append("imageFile", formDataJson.imageFile);
+
     onSave(formData);
   };
 
