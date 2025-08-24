@@ -1,7 +1,10 @@
 import { create } from "domain";
 import express from "express";
 import multer from "multer";
-import { createRestaurant } from "../controllers/restaurantController";
+import {
+  createRestaurant,
+  getRestaurant,
+} from "../controllers/restaurantController";
 import { validateRestaurantRequest } from "../middlewares/validation";
 import { jwtCheck, jwtParse } from "../middlewares/auth";
 
@@ -16,12 +19,15 @@ const upload = multer({
 if (!upload) {
   console.error("Multer upload configuration failed");
 }
+
+restaurantRoute.get("/", jwtCheck, jwtParse, getRestaurant);
+
 restaurantRoute.post(
   "/",
-  validateRestaurantRequest,
   upload.single("imageFile"),
   jwtCheck,
   jwtParse,
+  validateRestaurantRequest,
   createRestaurant
 );
 
