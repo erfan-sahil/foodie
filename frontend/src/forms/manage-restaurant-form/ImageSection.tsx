@@ -23,7 +23,7 @@ const ImageSection = () => {
       <div className="flex flex-col gap-8 w-[50%]">
         <FormField
           control={control}
-          name="imaageFile"
+          name="imageFile"
           render={({ field }) => (
             <FormItem>
               <FormControl>

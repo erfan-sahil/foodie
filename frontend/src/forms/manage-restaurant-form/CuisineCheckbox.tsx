@@ -8,7 +8,6 @@ type Props = {
 };
 
 const CuisineCheckbox = ({ cuisine, field }: Props) => {
-  console.log(cuisine);
   return (
     <FormItem
       className="flex flex-row items-center space-x-1 space-y-0

@@ -13,7 +13,7 @@ export const useCreateRestaurant = () => {
     restaurantFormData: FormData
   ): Promise<Restaurant> => {
     const accessToken = await getAccessTokenSilently();
-
+    console.log("calling");
     const response = await axios.post(
       `${API_BASE_URL}/api/v1/restaurant`,
       restaurantFormData,
@@ -28,6 +28,8 @@ export const useCreateRestaurant = () => {
       throw new Error("Failed to create restaurant");
     }
 
+    console.log("Restaurant created successfully:", response.data);
+
     return response.data;
   };
 
@@ -35,11 +37,11 @@ export const useCreateRestaurant = () => {
     mutationFn: createRestaurantRequest,
     onSuccess: () => {
       console.log("Restaurant created successfully");
-      toast.success("User updated successfully");
+      toast.success("Restaurant created successfully");
     },
     onError: (error) => {
       console.error("Failed to create restaurant:", error);
-      toast.success("User updated successfully");
+      toast.error("Failed to create restaurant");
     },
   });
 
