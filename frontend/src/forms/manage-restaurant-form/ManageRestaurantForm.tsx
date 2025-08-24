@@ -59,7 +59,8 @@ const ManageRestaurantForm = ({ restaurant, onSave, isPending }: Props) => {
     if (!restaurant) {
       return;
     }
-    const defaultValues: RestaurantFormData = {
+    const newRestaurantFormData = {
+      ...restaurant,
       restaurantName: restaurant.restaurantName,
       city: restaurant.city,
       country: restaurant.country,
@@ -70,9 +71,8 @@ const ManageRestaurantForm = ({ restaurant, onSave, isPending }: Props) => {
         name: item.name,
         price: item.price,
       })),
-      imageFile: new File([], ""),
     };
-    form.reset(defaultValues);
+    form.reset(newRestaurantFormData);
   }, [form, restaurant]);
 
   const onSubmit = (formDataJson: RestaurantFormData) => {
