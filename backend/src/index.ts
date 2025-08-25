@@ -2,10 +2,10 @@ import express, { Request, Response } from "express";
 import cors from "cors";
 import "dotenv/config";
 import mongoose from "mongoose";
-import userRoute from "./routes/userRoute";
 import { confidential } from "./secret/confidential";
 import { v2 as cloudinary } from "cloudinary";
-import restaurantRoute from "./routes/restaurantRoute";
+import restaurantRouter from "./routes/restaurantRouter";
+import userRouter from "./routes/userRouter";
 
 const { mongodbConnectionString, port } = confidential();
 
@@ -32,8 +32,8 @@ app.get("/health", (req: Request, res: Response) => {
   res.send({ message: "Health ok!" });
 });
 
-app.use("/api/v1/user", userRoute.userRoute);
-app.use("/api/v1/restaurant", restaurantRoute.restaurantRoute);
+app.use("/api/v1/user", userRouter.userRouter);
+app.use("/api/v1/restaurant", restaurantRouter.restaurantRouter);
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${process.env.PORT}`);

@@ -7,12 +7,12 @@ import {
 import { jwtCheck, jwtParse } from "../middlewares/auth";
 import { validateUserRequest } from "../middlewares/validation";
 
-const userRoute = express.Router();
+const userRouter = express.Router();
 
-userRoute.get("/", jwtCheck, jwtParse, getCurrentUser);
-userRoute.post("/", jwtCheck, createUser);
-userRoute.put("/", jwtCheck, jwtParse, validateUserRequest, updateCurrentUser);
+userRouter.get("/", jwtCheck, jwtParse, getCurrentUser);
+userRouter.post("/", jwtCheck, createUser);
+userRouter.put("/", jwtCheck, jwtParse, validateUserRequest, updateCurrentUser);
 
 export default {
-  userRoute,
+  userRouter,
 };

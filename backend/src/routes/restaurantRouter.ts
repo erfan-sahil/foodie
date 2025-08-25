@@ -3,13 +3,13 @@ import express from "express";
 import multer from "multer";
 import {
   createMyRestaurant,
-  getRestaurant,
+  getMyRestaurant,
   updateMyRestaurant,
 } from "../controllers/restaurantController";
 import { validateRestaurantRequest } from "../middlewares/validation";
 import { jwtCheck, jwtParse } from "../middlewares/auth";
 
-const restaurantRoute = express.Router();
+const restaurantRouter = express.Router();
 
 const storage = multer.memoryStorage();
 const upload = multer({
@@ -21,9 +21,9 @@ if (!upload) {
   console.error("Multer upload configuration failed");
 }
 
-restaurantRoute.get("/", jwtCheck, jwtParse, getRestaurant);
+restaurantRouter.get("/", jwtCheck, jwtParse, getMyRestaurant);
 
-restaurantRoute.post(
+restaurantRouter.post(
   "/",
   upload.single("imageFile"),
   jwtCheck,
@@ -32,7 +32,7 @@ restaurantRoute.post(
   createMyRestaurant
 );
 
-restaurantRoute.put(
+restaurantRouter.put(
   "/",
   upload.single("imageFile"),
   jwtCheck,
@@ -41,4 +41,4 @@ restaurantRoute.put(
   updateMyRestaurant
 );
 
-export default { restaurantRoute };
+export default { restaurantRouter };
