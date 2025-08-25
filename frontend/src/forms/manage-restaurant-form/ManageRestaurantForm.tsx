@@ -44,9 +44,15 @@ type Props = {
   restaurant?: Restaurant;
   onSave: (restaurantFormData: FormData) => void;
   isPending: boolean;
+  restaurantIsPending: boolean;
 };
 
-const ManageRestaurantForm = ({ restaurant, onSave, isPending }: Props) => {
+const ManageRestaurantForm = ({
+  restaurant,
+  onSave,
+  isPending,
+  restaurantIsPending,
+}: Props) => {
   const form = useForm<RestaurantFormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -55,6 +61,7 @@ const ManageRestaurantForm = ({ restaurant, onSave, isPending }: Props) => {
     },
   });
 
+  console.log(restaurant);
   useEffect(() => {
     if (!restaurant) {
       return;
@@ -74,6 +81,10 @@ const ManageRestaurantForm = ({ restaurant, onSave, isPending }: Props) => {
     };
     form.reset(newRestaurantFormData);
   }, [form, restaurant]);
+
+  if (restaurantIsPending) {
+    return <LoadingButton />;
+  }
 
   const onSubmit = (formDataJson: RestaurantFormData) => {
     console.log("onSubmit function calling:");

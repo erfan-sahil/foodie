@@ -10,10 +10,10 @@ export const useGetRestaurant = () => {
   const { getAccessTokenSilently } = useAuth0();
 
   const getRestaurantRequest = async (): Promise<Restaurant> => {
-    const accessToken = getAccessTokenSilently();
+    const accessToken = await getAccessTokenSilently();
     const response = await axios.get(`${API_BASE_URL}/api/v1/restaurant`, {
       headers: {
-        Authorization: `Bearer ${await accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
       },
     });
 
@@ -21,6 +21,7 @@ export const useGetRestaurant = () => {
       throw new Error("Failed to fetch restaurant");
     }
 
+    console.log(response.data);
     return response.data;
   };
 
@@ -40,7 +41,10 @@ export const useGetRestaurant = () => {
   if (isError) {
     console.error("Failed to fetch user data");
   }
-
+  if (isPending) {
+    console.log("Fetching restaurant data...");
+  }
+  console.log("from apiiiii", restaurant);
   return {
     restaurant,
     isPending,
@@ -74,6 +78,7 @@ export const useCreateRestaurant = () => {
 
   const { mutate: createRestaurant, isPending } = useMutation({
     mutationFn: createRestaurantRequest,
+
     onSuccess: () => {
       console.log("Restaurant created successfully");
       toast.success("Restaurant created successfully");
