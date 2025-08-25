@@ -21,13 +21,12 @@ export const useGetMyRestaurant = () => {
       throw new Error("Failed to fetch restaurant");
     }
 
-    console.log(response.data);
+    console.log("restaurant fetched data", response.data);
     return response.data;
   };
 
   const {
     data: restaurant,
-    isPending,
     isSuccess,
     isError,
   } = useQuery({
@@ -36,15 +35,12 @@ export const useGetMyRestaurant = () => {
   });
 
   if (isSuccess) {
-    console.error("User data fetched successfully");
+    console.log("User data fetched successfully");
   }
   if (isError) {
     console.error("Failed to fetch user data");
   }
-  if (isPending) {
-    console.log("Fetching restaurant data...");
-  }
-  console.log("from apiiiii", restaurant);
+
   return {
     restaurant,
   };
@@ -98,13 +94,13 @@ export const useCreateMyRestaurant = () => {
 export const useUpdateMyRestaurant = () => {
   const { getAccessTokenSilently } = useAuth0();
 
-  const updateMYRestaurantRequest = async (
+  const updateMyRestaurantRequest = async (
     restaurantFormData: FormData
   ): Promise<Restaurant> => {
     const accessToken = await getAccessTokenSilently();
 
     const response = await axios.put(
-      "${API_BASE_URL}/api/v1/restaurant",
+      `${API_BASE_URL}/api/v1/restaurant`,
       restaurantFormData,
       {
         headers: {
@@ -116,12 +112,12 @@ export const useUpdateMyRestaurant = () => {
     if (!response.data) {
       throw new Error("Failed to update restaurant");
     }
-
+    console.log("Restaurant updated successfully:", response.data);
     return response.data;
   };
 
   const { mutate: updateMyRestaurant, isPending } = useMutation({
-    mutationFn: updateMYRestaurantRequest,
+    mutationFn: updateMyRestaurantRequest,
     onSuccess: () => {
       console.log("Restaurant updated successfully");
       toast.success("Restaurant updated successfully");

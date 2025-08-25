@@ -61,7 +61,6 @@ const ManageRestaurantForm = ({ restaurant, onSave, isPending }: Props) => {
     },
   });
 
-  console.log(restaurant);
   useEffect(() => {
     if (!restaurant) {
       return;
