@@ -43,14 +43,15 @@ export const createMyRestaurant = async (req: Request, res: Response) => {
       });
     }
 
-    const image = req.file as Express.Multer.File;
-    const base64Image = Buffer.from(image.buffer).toString("base64");
-    const dataURI = `data:${image.mimetype};base64,${base64Image}`;
+    // const image = req.file as Express.Multer.File;
+    // const base64Image = Buffer.from(image.buffer).toString("base64");
+    // const dataURI = `data:${image.mimetype};base64,${base64Image}`;
 
-    const uploadResponse = await cloudinary.v2.uploader.upload(dataURI);
+    // const uploadResponse = await cloudinary.v2.uploader.upload(dataURI);
+    const imageUrl = await uploadImage(req.file as Express.Multer.File);
 
     const restaurant = new RestaurantModel(req.body);
-    restaurant.imageUrl = uploadResponse.url;
+    restaurant.imageUrl = imageUrl;
     restaurant.user = new mongoose.Types.ObjectId(req.userId);
     restaurant.lastUpdated = new Date();
     if (restaurant) {
@@ -81,10 +82,37 @@ export const updateMyRestaurant = async (req: Request, res: Response) => {
         success: false,
       });
     }
+
+    restaurant.restaurantName = req.body.restaurantName;
+    restaurant.city = req.body.city;
+    restaurant.country = req.body.country;
+    restaurant.deliveryPrice = req.body.deliveryPrice;
+    restaurant.estimatedDeliveryTime = req.body.estimatedDeliveryTime;
+    restaurant.cuisines = req.body.cuisines;
+    restaurant.menuItems = req.body.menuItems;
+    restaurant.lastUpdated = new Date();
+
+    if (req.file) {
+      const imageUrl = await uploadImage(req.file as Express.Multer.File);
+      restaurant.imageUrl = imageUrl;
+    }
+
+    await restaurant.save();
+    res.status(200).json(restaurant);
   } catch (error) {
     console.error("Error updating restaurant:", error);
     res.status(500).json({
       message: "Something went wrong",
     });
   }
+};
+
+const uploadImage = async (file: Express.Multer.File) => {
+  const image = file;
+  const base64Image = Buffer.from(image.buffer).toString("base64");
+  const dataURI = `data:${image.mimetype};base64,${base64Image}`;
+
+  const uploadResponse = await cloudinary.v2.uploader.upload(dataURI);
+
+  return uploadResponse.url;
 };
