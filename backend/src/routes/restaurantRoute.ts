@@ -2,7 +2,7 @@ import { create } from "domain";
 import express from "express";
 import multer from "multer";
 import {
-  createRestaurant,
+  createMyRestaurant,
   getRestaurant,
 } from "../controllers/restaurantController";
 import { validateRestaurantRequest } from "../middlewares/validation";
@@ -28,7 +28,16 @@ restaurantRoute.post(
   jwtCheck,
   jwtParse,
   validateRestaurantRequest,
-  createRestaurant
+  createMyRestaurant
+);
+
+restaurantRoute.put(
+  "/",
+  upload.single("imageFile"),
+  jwtCheck,
+  jwtParse,
+  validateRestaurantRequest,
+  updateMyRestaurant
 );
 
 export default { restaurantRoute };

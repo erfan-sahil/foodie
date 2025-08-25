@@ -16,18 +16,14 @@ export const getRestaurant = async (req: Request, res: Response) => {
       });
     }
 
-    return res.status(200).json({
-      message: "Restaurant fetched successfully",
-      success: true,
-      restaurant,
-    });
+    return res.json(restaurant);
   } catch (error) {
     console.error("Error fetching restaurant:", error);
     res.status(500).json({ message: "Error while fecthing restaurant" });
   }
 };
 
-export const createRestaurant = async (req: Request, res: Response) => {
+export const createMyRestaurant = async (req: Request, res: Response) => {
   try {
     const existingRestaurant = await RestaurantModel.findOne({
       user: req.userId,
@@ -70,5 +66,25 @@ export const createRestaurant = async (req: Request, res: Response) => {
   } catch (error) {
     console.error("Error creating restaurant:", error);
     res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const updateMyRestaurant = async (req: Request, res: Response) => {
+  try {
+    const restaurant = await RestaurantModel.findOne({
+      user: req.userId,
+    });
+
+    if (!restaurant) {
+      return res.status(404).json({
+        message: "Restaurant not found",
+        success: false,
+      });
+    }
+  } catch (error) {
+    console.error("Error updating restaurant:", error);
+    res.status(500).json({
+      message: "Something went wrong",
+    });
   }
 };
