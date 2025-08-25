@@ -6,10 +6,10 @@ import { toast } from "sonner";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-export const useGetRestaurant = () => {
+export const useGetMyRestaurant = () => {
   const { getAccessTokenSilently } = useAuth0();
 
-  const getRestaurantRequest = async (): Promise<Restaurant> => {
+  const getMyRestaurantRequest = async (): Promise<Restaurant> => {
     const accessToken = await getAccessTokenSilently();
     const response = await axios.get(`${API_BASE_URL}/api/v1/restaurant`, {
       headers: {
@@ -32,7 +32,7 @@ export const useGetRestaurant = () => {
     isError,
   } = useQuery({
     queryKey: ["fetchRestaurant"],
-    queryFn: getRestaurantRequest,
+    queryFn: getMyRestaurantRequest,
   });
 
   if (isSuccess) {
@@ -47,13 +47,13 @@ export const useGetRestaurant = () => {
   console.log("from apiiiii", restaurant);
   return {
     restaurant,
-    isPending,
   };
 };
-export const useCreateRestaurant = () => {
+
+export const useCreateMyRestaurant = () => {
   const { getAccessTokenSilently } = useAuth0();
 
-  const createRestaurantRequest = async (
+  const createMyRestaurantRequest = async (
     restaurantFormData: FormData
   ): Promise<Restaurant> => {
     const accessToken = await getAccessTokenSilently();
@@ -76,8 +76,8 @@ export const useCreateRestaurant = () => {
     return response.data;
   };
 
-  const { mutate: createRestaurant, isPending } = useMutation({
-    mutationFn: createRestaurantRequest,
+  const { mutate: createMyRestaurant, isPending } = useMutation({
+    mutationFn: createMyRestaurantRequest,
 
     onSuccess: () => {
       console.log("Restaurant created successfully");
@@ -90,7 +90,9 @@ export const useCreateRestaurant = () => {
   });
 
   return {
-    createRestaurant,
+    createMyRestaurant,
     isPending,
   };
 };
+
+// export const use;
