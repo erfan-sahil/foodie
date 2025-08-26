@@ -1,10 +1,10 @@
 import express from "express";
 import { param } from "express-validator";
-import { searchRestaurants } from "../controllers/RestaurantController";
+import { searchRestaurants } from "../controllers/SearchRestaurantController";
 
-const restaurantRouter = express.Router();
+const searchRestaurantRouter = express.Router();
 
-restaurantRouter.get(
+searchRestaurantRouter.get(
   "/search/:city",
   param("city")
     .isString()
@@ -14,4 +14,4 @@ restaurantRouter.get(
   searchRestaurants
 );
 
-export default { restaurantRouter };
+export default { searchRestaurantRouter };

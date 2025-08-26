@@ -4,11 +4,9 @@ import "dotenv/config";
 import mongoose from "mongoose";
 import { confidential } from "./secret/confidential";
 import { v2 as cloudinary } from "cloudinary";
-import restaurantRouter from "./routes/MyRestaurantRoute";
-import userRouter from "./routes/UserRoute";
 import MyRestaurantRoute from "./routes/MyRestaurantRoute";
 import UserRoute from "./routes/UserRoute";
-import RestaurantRoute from "./routes/RestaurantRoute";
+import SearchRestaurantRoute from "./routes/SearchRestaurantRoute";
 
 const { mongodbConnectionString, port } = confidential();
 
@@ -37,7 +35,7 @@ app.get("/health", (req: Request, res: Response) => {
 
 app.use("/api/v1/user", UserRoute.userRouter);
 app.use("/api/v1/restaurant", MyRestaurantRoute.restaurantRouter);
-app.use("/api/v1/restaurant", RestaurantRoute.restaurantRouter);
+app.use("/api/v1/restaurant", SearchRestaurantRoute.searchRestaurantRouter);
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${process.env.PORT}`);
