@@ -1,5 +1,6 @@
 import express from "express";
 import { param } from "express-validator";
+import { searchRestaurants } from "../controllers/RestaurantController";
 
 const restaurantRouter = express.Router();
 
@@ -10,7 +11,7 @@ restaurantRouter.get(
     .trim()
     .notEmpty()
     .withMessage("City parameter must be a string"),
-  restaurantController
+  searchRestaurants
 );
 
 export default { restaurantRouter };
