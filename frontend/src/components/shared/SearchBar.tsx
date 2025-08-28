@@ -65,7 +65,7 @@ const SearchBar = ({ onSubmit, placeHolder, onReset }: Props) => {
           )}
         />
 
-        {form.formState.isDirty && onReset && (
+        {form.formState.isDirty && (
           <Button
             onClick={handleReset}
             type="button"
