@@ -25,9 +25,25 @@ const SearchBar = ({ onSubmit, placeHolder, onReset }: Props) => {
       searchQuery: "",
     },
   });
+
+  const handleReset = () => {
+    form.reset({
+      searchQuery: "",
+    });
+
+    if (onReset) {
+      onReset();
+    }
+  };
+
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className={`flex items-center flex-1 gap-3 justify-between flex-row border-2 rounded-full  p-3 mx-5 ${
+          form.formState.errors.searchQuery && "border-red-500"
+        }`}
+      >
         <Search
           strokeWidth={2.5}
           size={30}
@@ -50,11 +66,16 @@ const SearchBar = ({ onSubmit, placeHolder, onReset }: Props) => {
         />
 
         {form.formState.isDirty && onReset && (
-          <Button type="button" variant="outline" className="rounded-full">
+          <Button
+            onClick={handleReset}
+            type="button"
+            variant="outline"
+            className="rounded-full"
+          >
             Clear
           </Button>
         )}
-        <Button type="submit" className="rounded-full">
+        <Button type="submit" className="rounded-full bg-orange-500">
           Search
         </Button>
       </form>
