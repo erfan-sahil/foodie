@@ -4,26 +4,22 @@ import axios from "axios";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-export const useSearchRestaurants = (
-  city?: string
-): Promise<RestaurantSearchResponse> => {
-  const createSearchRequests = async () => {
+export const useSearchRestaurants = (city?: string) => {
+  const createSearchRequests = async (): Promise<RestaurantSearchResponse> => {
     const response = await axios.get(
-      `${API_BASE_URL}/api/restaurant/search/${city}`
+      `${API_BASE_URL}/api/v1/restaurant/search/${city}`
     );
-
-    console.log(response);
 
     if (!response.data) {
       throw new Error("Failed to fetch restaurants");
     }
-    console.log("restaurant search data", response.data);
-    return response;
+    return response.data;
   };
 
   const { data: results, isPending } = useQuery({
     queryKey: ["searchRestaurants"],
     queryFn: createSearchRequests,
+    enabled: !!city,
   });
 
   return {
