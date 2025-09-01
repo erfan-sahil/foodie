@@ -15,7 +15,7 @@ export default function SearchPage() {
     searchQuery: "",
   });
 
-  const { results, isPending } = useSearchRestaurants(city);
+  const { results, isPending } = useSearchRestaurants(searchState, city);
 
   const setSearchQuey = (searchFormdata: SearchState) => {
     setSearchState((prev) => ({
@@ -44,6 +44,7 @@ export default function SearchPage() {
 
       <div id="main-content" className="flex flex-col gap-5">
         <SearchBar
+          searchQuery={searchState.searchQuery}
           onSubmit={setSearchQuey}
           placeHolder="Search by cuisine or Restaurant name"
           onReset={resetSearch}
