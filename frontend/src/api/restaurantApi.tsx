@@ -12,6 +12,7 @@ export const useSearchRestaurants = (
   const createSearchRequests = async (): Promise<RestaurantSearchResponse> => {
     const params = new URLSearchParams();
     params.set("searchQuery", searchState.searchQuery);
+    params.set("page", searchState.page.toString());
     const response = await axios.get(
       `${API_BASE_URL}/api/v1/restaurant/search/${city}?${params.toString()}`
     );
